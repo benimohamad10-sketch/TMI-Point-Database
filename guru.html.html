@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Panel Guru TMI Point</title>
+  <style>
+    :root{
+      --bg:#f8fafc;
+      --card:#ffffff;
+      --primary:#1d4ed8;
+      --secondary:#0f172a;
+      --muted:#64748b;
+      --success:#16a34a;
+      --danger:#ef4444;
+      --warning:#f59e0b;
+      --border:#e2e8f0;
+      --shadow:0 16px 32px rgba(15,23,42,0.08);
+    }
+
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family:Arial, Helvetica, sans-serif;
+      background:linear-gradient(135deg,#eff6ff,#f8fafc);
+      color:#0f172a;
+    }
+
+    .container{
+      max-width:1400px;
+      margin:0 auto;
+      padding:28px 18px 56px;
+    }
+
+    .header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      flex-wrap:wrap;
+      gap:16px;
+      background:linear-gradient(120deg,#0f172a,#1d4ed8);
+      color:white;
+      border-radius:20px;
+      padding:18px 22px;
+      box-shadow:var(--shadow);
+    }
+
+    .brand{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      font-weight:800;
+      letter-spacing:0.5px;
+    }
+
+    .brand-badge{
+      width:42px;
+      height:42px;
+      border-radius:12px;
+      display:grid;
+      place-items:center;
+      background:rgba(255,255,255,0.15);
+    }
+
+    .btn{
+      border:none;
+      border-radius:12px;
+      padding:11px 15px;
+      font-weight:700;
+      cursor:pointer;
+    }
+
+    .btn.primary{
+      background:linear-gradient(135deg,#2563eb,#1d4ed8);
+      color:white;
+    }
+
+    .btn.success{
+      background:#dcfce7;
+      color:#166534;
+    }
+
+    .btn.danger{
+      background:#fee2e2;
+      color:#b91c1c;
+    }
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:18px;
+      box-shadow:var(--shadow);
+    }
+
+    .login-box{
+      max-width:520px;
+      margin:80px auto 0;
+      padding:30px 24px;
+    }
+
+    .login-box h2{
+      margin:0 0 8px;
+      text-align:center;
+      font-size:1.9rem;
+    }
+
+    .login-box p{
+      margin:0 0 24px;
+      text-align:center;
+      color:var(--muted);
+    }
+
+    .form-group{
+      display:grid;
+      gap:8px;
+      margin-bottom:18px;
+    }
+
+    label{
+      font-weight:700;
+      color:#334155;
+    }
+
+    input{
+      width:100%;
+      padding:12px 14px;
+      border:1px solid var(--border);
+      border-radius:12px;
+      outline:none;
+      font-size:1rem;
+    }
+
+    input:focus{
+      border-color:rgba(37,99,235,0.6);
+      box-shadow:0 0 0 4px rgba(37,99,235,0.1);
+    }
+
+    .hidden{ display:none !important; }
+
+    .panel{
+      margin-top:20px;
+      padding:18px;
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:18px;
+      box-shadow:var(--shadow);
+    }
+
+    .table-wrap{
+      overflow:auto;
+      border:1px solid var(--border);
+      border-radius:14px;
+    }
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+      min-width:1200px;
+      background:white;
+    }
+
+    th,td{
+      padding:14px 12px;
+      border-bottom:1px solid var(--border);
+      text-align:left;
+      vertical-align:top;
+    }
+
+    th{
+      background:#f8fafc;
+      color:#334155;
+      font-weight:800;
+    }
+
+    tr:last-child td{
+      border-bottom:none;
+    }
+
+    .img-link{
+      display:inline-block;
+      max-width:130px;
+      padding:8px 10px;
+      border-radius:10px;
+      background:#dbeafe;
+      color:#1d4ed8;
+      font-weight:700;
+      text-align:center;
+    }
+
+    .status-pill{
+      display:inline-block;
+      padding:7px 10px;
+      border-radius:999px;
+      font-weight:700;
+      font-size:0.8rem;
+    }
+
+    .status-menunggu{ background:#fff7ed; color:#c2410c; }
+    .status-diterima{ background:#dcfce7; color:#166534; }
+    .status-ditolak{ background:#fee2e2; color:#b91c1c; }
+
+    .action-group{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+
+    .muted{
+      color:var(--muted);
+    }
+
+    .summary-card{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:14px;
+      margin-bottom:18px;
+    }
+
+    .summary-item{
+      padding:18px;
+      border:1px solid var(--border);
+      border-radius:14px;
+      background:#fff;
+    }
+
+    .summary-item h4{
+      margin:0 0 8px;
+      color:var(--muted);
+      font-size:0.9rem;
+    }
+
+    .summary-item strong{
+      font-size:1.8rem;
+      display:block;
+    }
+
+    @media (max-width: 760px){
+      .summary-card{
+        grid-template-columns:1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div id="loginView">
+      <div class="card login-box">
+        <h2>Panel Guru</h2>
+        <p>Masukkan kata sandi untuk mengakses validasi tugas</p>
+
+        <div class="form-group">
+          <label for="guruPass">Kata Sandi Guru</label>
+          <input type="password" id="guruPass" placeholder="Masukkan password..." />
+        </div>
+
+        <button class="btn primary" style="width:100%;" id="loginGuruBtn">Masuk</button>
+      </div>
+    </div>
+
+    <div id="dashboardView" class="hidden">
+      <header class="header">
+        <div class="brand">
+          <div class="brand-badge">⚙️</div>
+          <span>TMI Point - Guru</span>
+        </div>
+
+        <button id="logoutGuruBtn" class="btn" style="background:#fff; color:#0f172a;">Keluar</button>
+      </header>
+
+      <div class="panel">
+        <div class="summary-card">
+          <div class="summary-item">
+            <h4>Total Pengajuan</h4>
+            <strong id="totalPengajuan">0</strong>
+          </div>
+
+          <div class="summary-item">
+            <h4>Menunggu</h4>
+            <strong id="totalMenunggu">0</strong>
+          </div>
+
+          <div class="summary-item">
+            <h4>Sudah Diproses</h4>
+            <strong id="totalDiproses">0</strong>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Nama</th>
+                <th>Kelas</th>
+                <th>Absen</th>
+                <th>Nama Misi</th>
+                <th>Poin</th>
+                <th>Bukti</th>
+                <th>Status</th>
+                <th>Catatan</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="submissionTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const API_URL = "https://script.google.com/macros/s/AKfycbwki5oMXnhdAoPKABhJMJdfgf2bxQytu86lhJ2owSx9tMYezPnL3HDcz-W7AM20C-9ksQ/exec";
+    const GURU_PASS = "TMI2025";
+
+    document.getElementById("loginGuruBtn").addEventListener("click", () => {
+      const pass = document.getElementById("guruPass").value.trim();
+      if (pass === GURU_PASS) {
+        document.getElementById("loginView").classList.add("hidden");
+        document.getElementById("dashboardView").classList.remove("hidden");
+        loadSubmissionData();
+      } else {
+        alert("Password salah. Gunakan password guru yang valid.");
+      }
+    });
+
+    document.getElementById("logoutGuruBtn").addEventListener("click", () => {
+      document.getElementById("dashboardView").classList.add("hidden");
+      document.getElementById("loginView").classList.remove("hidden");
+      document.getElementById("guruPass").value = "";
+    });
+
+    async function loadSubmissionData() {
+      const result = await apiGet({ action: "getSubmissions" });
+      const rows = result?.data || [];
+
+      const total = rows.length;
+      const waiting = rows.filter(r => String(r.Status).toUpperCase() === "MENUNGGU").length;
+      const processed = rows.filter(r => String(r.Status).toUpperCase() === "DITERIMA" || String(r.Status).toUpperCase() === "DITOLAK").length;
+
+      document.getElementById("totalPengajuan").textContent = total;
+      document.getElementById("totalMenunggu").textContent = waiting;
+      document.getElementById("totalDiproses").textContent = processed;
+
+      const tbody = document.getElementById("submissionTableBody");
+      tbody.innerHTML = "";
+
+      if (!rows.length) {
+        tbody.innerHTML = `<tr><td colspan="9" style="padding:18px; color:#64748b;">Belum ada pengumpulan tugas.</td></tr>`;
+        return;
+      }
+
+      rows
+        .sort((a,b) => new Date(b.Tanggal) - new Date(a.Tanggal))
+        .forEach((row) => {
+          const tr = document.createElement("tr");
+
+          const status = String(row.Status || "MENUNGGU").toUpperCase();
+          const statusClass = status === "MENUNGGU" ? "status-menunggu" : status === "DITERIMA" ? "status-diterima" : "status-ditolak";
+
+          tr.innerHTML = `
+            <td>${row.Nama || "-"}</td>
+            <td>${row.Kelas || "-"}</td>
+            <td>${row.Absen || "-"}</td>
+            <td>${row.NamaMisi || "-"}</td>
+            <td>${row.Poin || 0} poin</td>
+            <td>${row.Bukti ? `<a href="${row.Bukti}" target="_blank" rel="noopener" class="img-link">Lihat Bukti</a>` : "-"}</td>
+            <td><span class="status-pill ${statusClass}">${status}</span></td>
+            <td>${row.Catatan || "-"}</td>
+            <td>
+              <div class="action-group">
+                <button class="btn success" data-action="accept" data-id="${row.ID}">TERIMA</button>
+                <button class="btn danger" data-action="reject" data-id="${row.ID}">TOLAK</button>
+              </div>
+            </td>
+          `;
+
+          tbody.appendChild(tr);
+        });
+
+      document.querySelectorAll("[data-action]").forEach(btn => {
+        btn.addEventListener("click", async () => {
+          const id = btn.getAttribute("data-id");
+          const action = btn.getAttribute("data-action");
+          const newStatus = action === "accept" ? "DITERIMA" : "DITOLAK";
+
+          const result = await apiPost({
+            action: "updateSubmissionStatus",
+            id: id,
+            status: newStatus
+          });
+
+          if (!result.ok) {
+            alert(result.message || "Gagal mengubah status tugas.");
+            return;
+          }
+
+          alert(result.message || `Status tugas berhasil diubah menjadi ${newStatus}.`);
+          loadSubmissionData();
+        });
+      });
+    }
+
+    async function apiGet(params) {
+      const query = new URLSearchParams(params).toString();
+      const res = await fetch(`${API_URL}?${query}`);
+      const text = await res.text();
+      try {
+        return JSON.parse(text);
+      } catch (err) {
+        return { ok: false, message: "Gagal mengambil data." };
+      }
+    }
+
+    async function apiPost(payload) {
+      const res = await fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+
+      const text = await res.text();
+      try {
+        return JSON.parse(text);
+      } catch (err) {
+        return { ok: false, message: "Gagal mengirim permintaan." };
+      }
+    }
+  </script>
+</body>
+</html>
